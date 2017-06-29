@@ -1,0 +1,26 @@
+---
+resources:
+- name: scripts
+  type: git
+  check_every: 1h
+  source:
+    uri: {{your-git-url}}
+- name: minio
+  type: s3
+  source:
+    bucket: http://minio.lab01.internal.ecsteam.io/minio/lab06a/
+    access_key_id: {{access-key}}
+    secret_access_key: {{secret-key}}
+    endpoint: {{minio-url}}
+    disable_ssl: true
+    regexp: (.*)
+
+jobs:
+- name: do-cfops
+  plan:
+  - get: scripts
+  - task: run-script
+    file: scripts/do-cfops.yml
+  - put: minio
+    params:
+      file: output_dir/*.zip
