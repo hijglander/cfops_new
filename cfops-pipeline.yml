@@ -8,7 +8,7 @@ resources:
 - name: minio
   type: s3
   source:
-    bucket: http://minio.lab01.internal.ecsteam.io/minio/lab06a/
+    bucket: lab06a
     access_key_id: {{access-key}}
     secret_access_key: {{secret-key}}
     endpoint: {{minio-url}}
@@ -23,4 +23,5 @@ jobs:
     file: scripts/do-cfops.yml
   - put: minio
     params:
-      file: output_dir/*.zip
+      file: backup/*.zip
+
